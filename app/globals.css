@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-deep: #0A0500;
+  --bg-section: #140A00;
+  --bg-card: #1E0F00;
+  --amber: #C97B1A;
+  --amber-light: #F0A830;
+  --saffron: #FFD166;
+  --cream: #FFF8E7;
+  --cream-muted: #C8A87A;
+  --gradient-hero: linear-gradient(180deg, #0A0500 0%, #140A00 50%, #0A0500 100%);
+  --gradient-gold: linear-gradient(135deg, #C97B1A 0%, #F0A830 50%, #C97B1A 100%);
+  --gradient-text: linear-gradient(135deg, #FFF8E7 0%, #C97B1A 40%, #F0A830 100%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--cream);
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide default cursor everywhere */
+*, *::before, *::after {
+  cursor: none !important;
+}
+
+/* Custom cursor */
+#cursor-inner {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--amber);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease;
+}
+
+#cursor-outer {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--amber);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease, transform 0.1s ease;
+}
+
+#cursor-outer.expanded {
+  width: 48px;
+  height: 48px;
+}
+
+/* Scroll progress bar */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #C97B1A, #F0A830);
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 0.05s linear;
+}
+
+/* Grain overlay */
+#grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.04;
+}
+
+/* Page wrapper — always visible; LoadingScreen acts as the visual cover */
+#page-wrapper {
+  opacity: 1;
+}
+
+/* Typography helpers */
+.font-display {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 100px;
+  letter-spacing: -2px;
+  line-height: 1.0;
+}
+
+.font-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 76px;
+  letter-spacing: -1.5px;
+}
+
+.font-h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 52px;
+  letter-spacing: -1px;
+}
+
+.font-h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.font-body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.font-caption {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.font-cta {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.text-gradient {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #C97B1A 0%, #F0A830 50%, #C97B1A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Amber CTA button */
+.btn-amber {
+  display: inline-block;
+  background: linear-gradient(135deg, #C97B1A, #F0A830);
+  color: #0A0500;
+  padding: 18px 52px;
+  border-radius: 0px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  border: none;
+  cursor: none;
+  box-shadow: 0 0 50px rgba(201, 123, 26, 0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-amber:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 70px rgba(201, 123, 26, 0.65);
+}
+
+/* Card hover */
+.card-hover {
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.card-hover:hover {
+  border-color: rgba(201, 123, 26, 0.5) !important;
+  transform: translateY(-4px);
+}
+
+/* ─── form-grid: 2 cols desktop, 1 col mobile ─── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 32px;
+}
+
+/* ─── iPad (≤1024px) ─── */
+@media (max-width: 1024px) {
+  .font-display { font-size: 72px; }
+  .font-h1 { font-size: 56px; }
+  .font-h2 { font-size: 42px; }
+
+  nav { padding: 16px 28px !important; }
+
+  section { padding-left: 32px !important; padding-right: 32px !important; }
+}
+
+/* ─── Phone (≤768px) ─── */
+@media (max-width: 768px) {
+  /* Typography */
+  .font-display { font-size: 48px; }
+  .font-h1 { font-size: 38px; }
+  .font-h2 { font-size: 30px; }
+  .font-h3 { font-size: 24px; }
+
+  /* Hide custom cursor on touch devices */
+  #cursor-inner, #cursor-outer { display: none; }
+  *, *::before, *::after { cursor: auto !important; }
+  body { cursor: auto; }
+
+  /* Navbar: shrink padding, hide text links */
+  nav { padding: 14px 20px !important; }
+  .nav-link { display: none !important; }
+  .nav-right { gap: 0 !important; }
+
+  /* Sections: reduce vertical and horizontal padding */
+  section { padding: 64px 20px !important; }
+
+  /* About columns: stack vertically, strip side borders, add bottom border */
+  .about-col {
+    padding: 40px 20px !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid rgba(201,123,26,0.12);
+  }
+  .about-col:last-child { border-bottom: none; }
+
+  /* Form grid: single column */
+  .form-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
+
+  /* btn-amber: full width on mobile */
+  .btn-amber { padding: 16px 28px; font-size: 11px; letter-spacing: 2px; }
+
+  /* Booking modal: tighter padding */
+  .modal-card { padding: 36px 20px !important; }
+
+  /* Footer row: center on mobile */
+  .footer-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+
+  /* FinalCTA top margin of footer */
+  .footer-top { margin-top: 64px !important; }
+}
