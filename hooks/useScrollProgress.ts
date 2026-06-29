@@ -10,8 +10,12 @@ export function useScrollProgress() {
 
     function update() {
       const scrollTop = window.scrollY
-      const docHeight = document.body.scrollHeight - window.innerHeight
-      const p = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop / docHeight)) : 0
+      // Scope to the 500vh animation section only (not full page).
+      // The sticky unsticks at scrollY = (500 - 1) * innerHeight = 499 * innerHeight.
+      // Dividing by full page height meant the last frames never played because
+      // below-fold sections pushed progress below 1.0 before the animation ended.
+      const sectionHeight = window.innerHeight * 499
+      const p = Math.min(1, Math.max(0, scrollTop / sectionHeight))
       if (Math.abs(p - lastProgress) > 0.0001) {
         lastProgress = p
         setProgress(p)
