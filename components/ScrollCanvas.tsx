@@ -6,6 +6,7 @@ const TOTAL_FRAMES = 315
 
 export default function ScrollCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null)
   const imagesRef = useRef<HTMLImageElement[]>([])
   const rafRef = useRef<number>(0)
@@ -22,14 +23,25 @@ export default function ScrollCanvas() {
 
     function resize() {
       if (!canvas) return
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
+      const w = window.innerWidth
+      const h = window.innerHeight
+      canvas.width = w
+      canvas.height = h
+      // Force container to match exact visible height (fixes 100vh ≠ innerHeight on mobile)
+      if (containerRef.current) {
+        containerRef.current.style.height = h + 'px'
+      }
       renderFrame(lastFrameRef.current)
     }
 
     window.addEventListener('resize', resize)
+    // Re-measure after orientation flip (browser needs ~150ms to settle new dimensions)
+    window.addEventListener('orientationchange', () => setTimeout(resize, 150))
     resize()
-    return () => window.removeEventListener('resize', resize)
+    return () => {
+      window.removeEventListener('resize', resize)
+      window.removeEventListener('orientationchange', resize)
+    }
   }, [])
 
   // Pick up preloaded frames from LoadingScreen
@@ -84,11 +96,10 @@ export default function ScrollCanvas() {
   }, [progress])
 
   return (
-    <div style={{
+    <div ref={containerRef} className="scroll-sticky" style={{
       position: 'sticky',
       top: 0,
       width: '100%',
-      height: '100vh',
       background: 'var(--bg-deep)',
       overflow: 'hidden',
     }}>

@@ -35,9 +35,9 @@ export default function Home() {
         <>
           <Navbar />
 
-          {/* Scroll animation — 500vh */}
-          <div style={{ height: '500vh', position: 'relative' }}>
-            <div style={{ position: 'sticky', top: 0, height: '100vh', zIndex: 0 }}>
+          {/* Scroll animation — 500vh/dvh */}
+          <div className="scroll-outer" style={{ position: 'relative' }}>
+            <div className="scroll-sticky" style={{ position: 'sticky', top: 0, zIndex: 0 }}>
               <ScrollCanvas />
               <div style={{ position: 'absolute', inset: 0, zIndex: 10, pointerEvents: 'none' }}>
                 <TextOverlay />

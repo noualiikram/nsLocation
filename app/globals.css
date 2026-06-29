@@ -263,3 +263,11 @@ body {
   /* FinalCTA top margin of footer */
   .footer-top { margin-top: 64px !important; }
 }
+
+/* Scroll animation viewport — dvh excludes mobile browser chrome (address bar) */
+.scroll-outer { height: 500vh; }
+.scroll-sticky { height: 100vh; }
+@supports (height: 100dvh) {
+  .scroll-outer { height: 500dvh; }
+  .scroll-sticky { height: 100dvh; }
+}
