@@ -68,10 +68,17 @@ export default function ScrollCanvas() {
     const img = imgs[idx]
     if (!img || !img.complete || img.naturalWidth === 0) return
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    // Fill background first so letterbox bars match the site color (portrait mode)
+    ctx.fillStyle = '#0A0500'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    // Cover the canvas
-    const scale = Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
+    // Portrait (phone/iPad): contain — show full frame, no zoom
+    // Landscape (desktop/tablet): cover — fill screen
+    const isPortrait = canvas.height > canvas.width
+    const scale = isPortrait
+      ? Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
+      : Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
+
     const w = img.naturalWidth * scale
     const h = img.naturalHeight * scale
     const x = (canvas.width - w) / 2
