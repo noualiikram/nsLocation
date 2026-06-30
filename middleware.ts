@@ -29,7 +29,7 @@ export function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  if (entry.count >= 3) {
+  if (entry.count >= 5) {
     return NextResponse.json(
       { error: 'Too many attempts. Please try again later.' },
       { status: 429 }

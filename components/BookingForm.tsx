@@ -76,7 +76,7 @@ function getRateLimitKey() {
 function checkRateLimit(): boolean {
   const key = getRateLimitKey()
   const attempts = parseInt(localStorage.getItem(key) || '0', 10)
-  return attempts < 3
+  return attempts < 5
 }
 
 function incrementAttempts() {
@@ -165,8 +165,7 @@ export default function BookingForm({ selectedCar }: Props) {
 
       const q = query(
         collection(db, 'reservations'),
-        where('carName', '==', selectedCar),
-        where('status', '!=', 'cancelled')
+        where('carName', '==', selectedCar)
       )
 
       const snapshot = await getDocs(q)
@@ -183,6 +182,7 @@ export default function BookingForm({ selectedCar }: Props) {
 
       setStatus(overlap ? 'unavailable' : 'available')
     } catch (err) {
+      console.error('Booking availability check failed:', err)
       setStatus('error')
     }
   }

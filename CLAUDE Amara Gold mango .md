@@ -363,7 +363,7 @@ openGraph.images: ['/frames/frame_0001.webp']
 - Disable "Book" button untill all fields are valid
 
 ### Rate Limiting:
-- Maximum 3 booking attempts per IP address per hour
+- Maximum 5 booking attempts per IP address per hour
 - If limit exceeded → show message: "Too many attempts. Please try again later."
 - Use Vercel Edge middleware for rate limiting
 
