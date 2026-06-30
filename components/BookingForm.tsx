@@ -85,6 +85,47 @@ function incrementAttempts() {
   localStorage.setItem(key, String(attempts + 1))
 }
 
+interface FieldProps {
+  name: keyof FormState
+  label: string
+  type?: string
+  min?: string
+  form: FormState
+  errs: Errors
+  touched: Partial<Record<keyof FormState, boolean>>
+  onChange: (field: keyof FormState, value: string) => void
+  onBlur: (field: keyof FormState) => void
+}
+
+// Defined outside BookingForm so React keeps the same component identity across
+// re-renders — defining it inside the render function recreated it every keystroke,
+// which remounted the underlying <input> DOM node and dropped focus after each letter.
+function Field({ name, label, type = 'text', min, form, errs, touched, onChange, onBlur }: FieldProps) {
+  return (
+    <div style={{ marginBottom: '24px' }}>
+      <label style={LABEL_STYLE}>{label}</label>
+      <input
+        type={type}
+        min={min}
+        value={form[name]}
+        onChange={e => onChange(name, e.target.value)}
+        onBlur={() => onBlur(name)}
+        style={{
+          ...FIELD_STYLE,
+          borderColor: touched[name] && errs[name] ? '#ef4444' : 'rgba(201,123,26,0.2)',
+          colorScheme: 'dark',
+        }}
+        onFocus={e => (e.target.style.borderColor = 'var(--amber)')}
+      />
+      {touched[name] && errs[name] && (
+        <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', fontFamily: 'Inter, sans-serif' }}>
+          {errs[name]}
+        </p>
+      )}
+    </div>
+  )
+}
+
 export default function BookingForm({ selectedCar }: Props) {
   const [form, setForm] = useState<FormState>({
     firstName: '', lastName: '', phone: '', passport: '', startDate: '', endDate: '',
@@ -165,30 +206,6 @@ export default function BookingForm({ selectedCar }: Props) {
     }
   }
 
-  const Field = ({ name, label, type = 'text', min }: { name: keyof FormState; label: string; type?: string; min?: string }) => (
-    <div style={{ marginBottom: '24px' }}>
-      <label style={LABEL_STYLE}>{label}</label>
-      <input
-        type={type}
-        min={min}
-        value={form[name]}
-        onChange={e => handleChange(name, e.target.value)}
-        onBlur={() => handleBlur(name)}
-        style={{
-          ...FIELD_STYLE,
-          borderColor: touched[name] && errs[name] ? '#ef4444' : 'rgba(201,123,26,0.2)',
-          colorScheme: 'dark',
-        }}
-        onFocus={e => (e.target.style.borderColor = 'var(--amber)')}
-      />
-      {touched[name] && errs[name] && (
-        <p style={{ color: '#ef4444', fontSize: '12px', marginTop: '6px', fontFamily: 'Inter, sans-serif' }}>
-          {errs[name]}
-        </p>
-      )}
-    </div>
-  )
-
   return (
     <>
       <section id="booking" style={{ background: 'var(--bg-deep)', padding: '120px 48px' }}>
@@ -240,15 +257,15 @@ export default function BookingForm({ selectedCar }: Props) {
           )}
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 32px' }} className="form-grid">
-            <Field name="firstName" label="First Name" />
-            <Field name="lastName" label="Last Name" />
+            <Field name="firstName" label="First Name" form={form} errs={errs} touched={touched} onChange={handleChange} onBlur={handleBlur} />
+            <Field name="lastName" label="Last Name" form={form} errs={errs} touched={touched} onChange={handleChange} onBlur={handleBlur} />
           </div>
-          <Field name="phone" label="Phone Number" type="tel" />
-          <Field name="passport" label="Passport Number" />
+          <Field name="phone" label="Phone Number" type="tel" form={form} errs={errs} touched={touched} onChange={handleChange} onBlur={handleBlur} />
+          <Field name="passport" label="Passport Number" form={form} errs={errs} touched={touched} onChange={handleChange} onBlur={handleBlur} />
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 32px' }} className="form-grid">
-            <Field name="startDate" label="Start Date" type="date" min={new Date().toISOString().split('T')[0]} />
-            <Field name="endDate" label="End Date" type="date" min={form.startDate || new Date().toISOString().split('T')[0]} />
+            <Field name="startDate" label="Start Date" type="date" min={new Date().toISOString().split('T')[0]} form={form} errs={errs} touched={touched} onChange={handleChange} onBlur={handleBlur} />
+            <Field name="endDate" label="End Date" type="date" min={form.startDate || new Date().toISOString().split('T')[0]} form={form} errs={errs} touched={touched} onChange={handleChange} onBlur={handleBlur} />
           </div>
 
           <button
