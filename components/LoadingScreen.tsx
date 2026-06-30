@@ -35,7 +35,9 @@ export default function LoadingScreen({ onComplete }: Props) {
     toLoad.forEach((frameNum) => {
       const img = new Image()
       const num = String(frameNum).padStart(4, '0')
-      img.src = `/frames/frame_${num}.webp`
+      // Cache-busting query: frame URLs are served with immutable 1-year caching,
+      // so changing the video (same filenames) needs a new query key to force re-fetch
+      img.src = `/frames/frame_${num}.webp?v=2`
       img.onload = img.onerror = () => {
         loaded++
         loadedRef.current = loaded
