@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 
-const TOTAL_FRAMES = 315
+const TOTAL_FRAMES = 304
 
 interface Props {
   onComplete: () => void
@@ -63,8 +63,8 @@ export default function LoadingScreen({ onComplete }: Props) {
         position: 'fixed',
         inset: 0,
         // Hardcoded fallback + CSS variable — works even if stylesheet hasn't applied yet
-        backgroundColor: '#EE8FAB',
-        background: 'var(--bg-deep, #EE8FAB)',
+        backgroundColor: '#0A0500',
+        background: 'var(--bg-deep, #0A0500)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           h1, h2, h3, h4, h5, h6 { font-family: var(--font-cormorant), serif; }
         `}</style>
       </head>
-      <body style={{ backgroundColor: '#EE8FAB' }}>
+      <body style={{ backgroundColor: '#0A0500' }}>
         {/* Grain overlay */}
         <div id="grain-overlay" aria-hidden="true">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">

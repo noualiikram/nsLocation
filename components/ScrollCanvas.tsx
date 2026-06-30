@@ -2,7 +2,7 @@
 import { useEffect, useRef } from 'react'
 import { useScrollProgress } from '@/hooks/useScrollProgress'
 
-const TOTAL_FRAMES = 315
+const TOTAL_FRAMES = 304
 
 export default function ScrollCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -64,20 +64,22 @@ export default function ScrollCanvas() {
     const imgs = imagesRef.current
     if (!imgs.length) return
 
-    // Always paint the pink background first — this IS the bar color on mobile
-    ctx.fillStyle = '#EE8FAB'
+    // Always paint the background first — this IS the bar color where shown
+    ctx.fillStyle = '#0A0500'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     const idx = Math.max(0, Math.min(imgs.length - 1, frameIndex))
     const img = imgs[idx]
     if (!img || !img.complete || img.naturalWidth === 0) return
 
-    // Mobile (<768px): contain — full car visible, dark bars fill the gaps
-    // Desktop/tablet: cover — fill the screen
-    const isMobile = canvas.width < 768
-    const scale = isMobile
-      ? Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
-      : Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
+    // Video is portrait (1080x1920). Portrait screens (phone/iPad portrait): cover —
+    // aspect ratios are close, fills screen with minimal crop.
+    // Landscape screens (laptop/iPad landscape): contain — avoids extreme zoom,
+    // shows full frame centered with pillarbox bars.
+    const isPortraitScreen = canvas.height > canvas.width
+    const scale = isPortraitScreen
+      ? Math.max(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
+      : Math.min(canvas.width / img.naturalWidth, canvas.height / img.naturalHeight)
 
     const w = img.naturalWidth * scale
     const h = img.naturalHeight * scale
@@ -107,7 +109,7 @@ export default function ScrollCanvas() {
       position: 'sticky',
       top: 0,
       width: '100%',
-      background: '#EE8FAB',
+      background: '#0A0500',
       overflow: 'hidden',
     }}>
       {/* Warm amber glow behind canvas */}
@@ -126,7 +128,7 @@ export default function ScrollCanvas() {
           inset: 0,
           display: 'block',
           zIndex: 2,
-          background: '#EE8FAB',
+          background: '#0A0500',
         }}
       />
     </div>
