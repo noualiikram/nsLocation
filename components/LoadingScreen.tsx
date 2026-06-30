@@ -63,8 +63,8 @@ export default function LoadingScreen({ onComplete }: Props) {
         position: 'fixed',
         inset: 0,
         // Hardcoded fallback + CSS variable — works even if stylesheet hasn't applied yet
-        backgroundColor: '#0A0500',
-        background: 'var(--bg-deep, #0A0500)',
+        backgroundColor: '#EE8FAB',
+        background: 'var(--bg-deep, #EE8FAB)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

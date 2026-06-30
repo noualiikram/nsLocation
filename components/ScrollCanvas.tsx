@@ -69,7 +69,7 @@ export default function ScrollCanvas() {
     if (!img || !img.complete || img.naturalWidth === 0) return
 
     // Fill background so the bars on mobile blend with the site color
-    ctx.fillStyle = '#0A0500'
+    ctx.fillStyle = '#EE8FAB'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     // Mobile (<768px): contain — full car visible, dark bars fill the gaps

@@ -10,10 +10,13 @@ export function useScrollProgress() {
 
     function update() {
       const scrollTop = window.scrollY
-      // Animation section is 500vh tall, sticky is 100vh tall.
-      // 1vh = window.innerHeight / 100, so 500vh = 5 × innerHeight.
-      // The sticky unsticks after scrolling (500vh - 100vh) = 400vh = 4 × innerHeight.
-      const sectionHeight = window.innerHeight * 4
+      // Read actual rendered height of the scroll container so any CSS unit
+      // (vh, dvh, px) is handled correctly — avoids drift when mobile browser
+      // toolbar shows/hides and window.innerHeight changes after layout.
+      const el = document.querySelector<HTMLElement>('.scroll-outer')
+      const sectionHeight = el
+        ? el.offsetHeight - window.innerHeight
+        : window.innerHeight * 4
       const p = Math.min(1, Math.max(0, scrollTop / sectionHeight))
       if (Math.abs(p - lastProgress) > 0.0001) {
         lastProgress = p
