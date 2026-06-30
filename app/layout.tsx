@@ -18,7 +18,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'NS Location — Premium Cars. Perfect Roads.',
+  title: 'NS Location — NS Location. Perfect Roads.',
   description: 'Premium car rental. Available now.',
   metadataBase: new URL('https://ns-location.vercel.app'),
   openGraph: {

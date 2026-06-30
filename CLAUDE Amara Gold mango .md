@@ -15,7 +15,7 @@
 
 | Key         | Value                                                                  |
 | Name        | NS Location                                                             |
-| Tagline     | Premium cars. Perfect Roads.                                          |
+| Tagline     | NS Location. Perfect Roads.                                          |
 | Sub-tagline | NS Location. Every ride. An experience.                          |
 | Aesthetic   | Porsche meets Range-Rover meets Hertz Premium — élegant, puissant, cinematic        |
 | Feel        | Assis dans une voiture de luxe sur une route vide au coucher de soleil. Libre, premium, inoubliable. |
@@ -24,7 +24,7 @@
 
 ## Color System
 
---bg-deep: #f4a0a8;        /* near-black warm amber — main background */
+--bg-deep: #0d0102;        /* near-black warm amber — main background */
 --bg-section: #140A00;     /* deep warm black */
 --bg-card: #1E0F00;        /* card background */
 --amber: #C97B1A;          /* deep amber — primary accent */

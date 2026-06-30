@@ -22,7 +22,7 @@ export default function FinalCTA() {
         color: 'var(--cream)',
         marginBottom: '40px',
       }}>
-        Premium Cars. Perfect Roads.
+        NS Location. Perfect Roads.
       </h2>
       <p className="font-body" style={{ color: 'var(--cream-muted)', marginBottom: '48px' }}>
         NS Location. Every ride. An experience.
