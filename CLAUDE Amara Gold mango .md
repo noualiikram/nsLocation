@@ -24,7 +24,7 @@
 
 ## Color System
 
---bg-deep: #0A0500;        /* near-black warm amber — main background */
+--bg-deep: #f4a0a8;        /* near-black warm amber — main background */
 --bg-section: #140A00;     /* deep warm black */
 --bg-card: #1E0F00;        /* card background */
 --amber: #C97B1A;          /* deep amber — primary accent */
