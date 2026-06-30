@@ -64,13 +64,13 @@ export default function ScrollCanvas() {
     const imgs = imagesRef.current
     if (!imgs.length) return
 
+    // Always paint the pink background first — this IS the bar color on mobile
+    ctx.fillStyle = '#EE8FAB'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
     const idx = Math.max(0, Math.min(imgs.length - 1, frameIndex))
     const img = imgs[idx]
     if (!img || !img.complete || img.naturalWidth === 0) return
-
-    // Fill background so the bars on mobile blend with the site color
-    ctx.fillStyle = '#EE8FAB'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
 
     // Mobile (<768px): contain — full car visible, dark bars fill the gaps
     // Desktop/tablet: cover — fill the screen
@@ -107,7 +107,7 @@ export default function ScrollCanvas() {
       position: 'sticky',
       top: 0,
       width: '100%',
-      background: 'var(--bg-deep)',
+      background: '#EE8FAB',
       overflow: 'hidden',
     }}>
       {/* Warm amber glow behind canvas */}
@@ -126,6 +126,7 @@ export default function ScrollCanvas() {
           inset: 0,
           display: 'block',
           zIndex: 2,
+          background: '#EE8FAB',
         }}
       />
     </div>
